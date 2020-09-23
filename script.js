@@ -1,8 +1,8 @@
 //retrieve data and display it on screen
 
 async function main() {
-    let namesSet = await fetchData('//78.63.13.74:3006/FlowFormaAPI/names');
-    let techSet = await fetchData('//78.63.13.74:3006/FlowFormaAPI/tech');
+    let namesSet = await fetchData('http://78.63.13.74:3006/FlowFormaAPI/names');
+    let techSet = await fetchData('http://78.63.13.74:3006/FlowFormaAPI/tech');
 
     let names = await namesSet.json();
     let tech = await techSet.json();
@@ -31,7 +31,7 @@ async function getAge(names) {
 
     for (let i = 0; i < arrayLength; i++) {
         let age;
-        let dateSet = await fetchData('//78.63.13.74:3006/FlowFormaAPI/getdate/' + names[i].toString());
+        let dateSet = await fetchData('http://78.63.13.74:3006/FlowFormaAPI/getdate/' + names[i].toString());
         let dateNow = await dateSet.json();
 
         let yearEnd, monthEnd, dayEnd;
