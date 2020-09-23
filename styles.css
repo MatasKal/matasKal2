@@ -1,7 +1,108 @@
-table {
+#populate-button {
     border-collapse: collapse;
-  }
-  
-  table, th, td {
-    border: 1px solid black;
-  }
+    display: block;
+    position: relative;
+    font-size: 0.9rem;
+    min-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    background-color: #004561;
+    color: #eeeeee;
+    cursor: pointer;
+    border-radius: 0.5rem;
+}
+
+#people-list {
+    border-collapse: collapse;
+    font-size: 0.9em;
+    min-width: 400px;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    box-shadow: 0 0 10px rgba(207, 224, 255, 0.678);
+    margin-left: auto;
+    margin-right: auto;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+}
+
+#people-list th {
+    width: 10rem;
+    border-bottom: thin solid black;
+    padding-top: 1.4rem;
+    padding-bottom: 1.4rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    background-color: #004561;
+    color: #eeeeee;
+    cursor: pointer;
+}
+
+#people-list th::before {
+    content: "";
+    position: relative;
+    top: -0.5rem;
+    width: 0;
+    height: 0;
+    border-left: 0.5rem solid transparent;
+    border-right: 0.5rem solid transparent;
+    border-top: 0.5rem solid transparent;
+    border-bottom: 0.5rem solid rgba(207, 224, 255, 0.678);
+    margin: auto;
+    display: block;
+}
+
+#people-list th::after {
+    content: "";
+    position: relative;
+    top: 0.6rem;
+    width: 0;
+    height: 0;
+    border-left: 0.5rem solid transparent;
+    border-right: 0.5rem solid transparent;
+    border-top: 0.5rem solid rgba(207, 224, 255, 0.678);
+    border-bottom: 0.5rem solid transparent;
+    margin: auto;
+    display: block;
+}
+
+#people-list th:first-of-type {
+    border-top-left-radius: 1rem;
+    border-right: thin solid black;
+}
+
+#people-list th:last-of-type {
+    border-top-right-radius: 1rem;
+    border-left: thin solid black;
+}
+
+#people-list tr {
+    border-bottom: 1px solid #a3a3a3;
+    text-align: center;
+}
+
+#people-list td {
+    padding-top: 1.2rem;
+    padding-bottom: 1.2rem;
+}
+
+#people-list tr:hover {
+    background-color: #b2d6f3;
+}
+
+#people-list tr:hover:nth-of-type(even) {
+    background-color: #b2d6f3;
+}
+
+#people-list tr:nth-of-type(even) {
+    background-color: #eeeeee;
+}
+
+#people-list tr:last-of-type {
+    border-bottom: 2px solid #004561;
+}
