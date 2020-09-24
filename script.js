@@ -67,15 +67,9 @@ async function getAge(names) {
         else {
             age = "Invalid Dates. Please check!"
         }
-
         ages.push(age);
-        console.log(dateNow);
-        console.log(yearEnd);
     }
-    
     return ages;
-
-    
 }
 
 //get data from API
