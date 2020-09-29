@@ -90,7 +90,6 @@ async function getAge(names) {
     ages.push(age);
   }
 
-  console.log(ages);
   return ages;
 }
 
