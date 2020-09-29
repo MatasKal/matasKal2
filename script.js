@@ -103,6 +103,7 @@ async function fetchAllDates(urls) {
           )
       )
     )
+    
     console.log(dateSet);
     return dataSet;
 
