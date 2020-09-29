@@ -85,6 +85,7 @@ async function getAge(names) {
 //get data from API
 
 async function fetchData(url) {
+  let dataSet;
   try {
     let dataSet = await fetch(url);
     return dataSet;
@@ -94,19 +95,12 @@ async function fetchData(url) {
 }
 
 async function fetchAllDates(urls) {
+  let dataSet;
   try {
-    let dataSet = await Promise.all(
-      urls.map(
-        url =>
-          fetch(url).then(
-            (response) => response.json()
-          )
-      )
-    )
-    
+    dataSet = await Promise.all(
+      urls.map(url => fetch(url).then((response) => response.json())));
     console.log(dateSet);
     return dataSet;
-
   } catch {
     throw new Error(`Error! status: ${dataSet.status}`);
   }
