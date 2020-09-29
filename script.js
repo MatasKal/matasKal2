@@ -37,6 +37,7 @@ async function getAge(names) {
 
   dateSet = fetchAllDates(urlList);
 
+
   for (let i = 0; i < arrayLength; i++) {
     let age;
     
@@ -102,7 +103,7 @@ async function fetchAllDates(urls) {
           )
       )
     )
-    
+    console.log(dateSet);
     return dataSet;
 
   } catch {
