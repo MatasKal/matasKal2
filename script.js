@@ -35,6 +35,8 @@ async function getAge(names) {
     urlList[i] = 'http://78.63.13.74:3006/FlowFormaAPI/getdate/' + names[i].toString();
   }
 
+  console.log(urlList);
+
   dateSet = fetchAllDates(urlList);
 
 
