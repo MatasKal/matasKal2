@@ -18,7 +18,7 @@ async function main() {
     addRow("people-list", names[i], tech[i], ages[i]);
   }
 
-  hideLoading ();
+  hideLoading();
 }
 
 //calculate age based on information
@@ -167,12 +167,12 @@ function sortTable(n) {
   }
 }
 
-function showLoading () {
+function showLoading() {
   document.getElementById("loading-front").classList.add("show");
   document.getElementById("loading-back").classList.add("show");
 }
 
-function hideLoading () {
+function hideLoading() {
   document.getElementById("loading-front").classList.remove("show");
   document.getElementById("loading-back").classList.remove("show");
 }
