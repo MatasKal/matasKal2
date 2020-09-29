@@ -1,7 +1,7 @@
 //retrieve data and display it on screen
 
 async function main() {
-
+  
   showLoading();
 
   let namesSet = await fetchData('http://78.63.13.74:3006/FlowFormaAPI/names');
@@ -13,6 +13,10 @@ async function main() {
   let arrayLength = names.length;
 
   let ages = await getAge(names);
+
+  while (document.getElementById("people-list").rows.length > 1) {
+    document.getElementById("people-list").deleteRow(1);
+  }
 
   for (let i = 0; i < arrayLength; i++) {
     addRow("people-list", names[i], tech[i], ages[i]);
