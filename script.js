@@ -1,6 +1,9 @@
 //retrieve data and display it on screen
 
 async function main() {
+
+  showLoading();
+
   let namesSet = await fetchData('http://78.63.13.74:3006/FlowFormaAPI/names');
   let techSet = await fetchData('http://78.63.13.74:3006/FlowFormaAPI/tech');
 
@@ -14,6 +17,8 @@ async function main() {
   for (let i = 0; i < arrayLength; i++) {
     addRow("people-list", names[i], tech[i], ages[i]);
   }
+
+  hideLoading ();
 }
 
 //calculate age based on information
@@ -35,14 +40,18 @@ async function getAge(names) {
     urlList[i] = 'http://78.63.13.74:3006/FlowFormaAPI/getdate/' + names[i].toString();
   }
 
-  console.log(urlList);
+  try {
+    dateSet = await Promise.all(
+      urlList.map(url => fetch(url).then((response) => response.json())));
+  } catch (error) {
 
-  dateSet = fetchAllDates(urlList);
-
+    console.log(error);
+    throw error;
+  }
 
   for (let i = 0; i < arrayLength; i++) {
     let age;
-    
+
     let dateNow = dateSet[i];
 
     let yearEnd, monthEnd, dayEnd;
@@ -87,24 +96,14 @@ async function getAge(names) {
 //get data from API
 
 async function fetchData(url) {
-  let dataSet;
-  try {
-    let dataSet = await fetch(url);
-    return dataSet;
-  } catch {
+
+  let dataSet = await fetch(url);
+
+  if (!dataSet.ok) {
     throw new Error(`Error! status: ${dataSet.status}`);
   }
-}
-
-async function fetchAllDates(urls) {
-  let dataSet;
-  try {
-    dataSet = await Promise.all(
-      urls.map(url => fetch(url).then((response) => response.json())));
-    console.log(dateSet);
+  else {
     return dataSet;
-  } catch {
-    throw new Error(`Error! status: ${dataSet.status}`);
   }
 }
 
@@ -166,4 +165,14 @@ function sortTable(n) {
       }
     }
   }
+}
+
+function showLoading () {
+  document.getElementById("loading-front").classList.add("show");
+  document.getElementById("loading-back").classList.add("show");
+}
+
+function hideLoading () {
+  document.getElementById("loading-front").classList.remove("show");
+  document.getElementById("loading-back").classList.remove("show");
 }
