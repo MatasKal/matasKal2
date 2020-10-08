@@ -11,7 +11,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      names: [],
+      data: null,
     };
 
   }
@@ -19,25 +19,28 @@ class App extends Component {
   componentDidMount() {
     fetch(NAME_API)
       .then(response => response.json())
-      .then(data => this.setState({ names: data.names }));
+      .then(data => this.setState({ data }));
   }
 
 
   render() {
 
-    const { names } = this.state;
+    const { data } = this.state;
 
-    if (this.state.names === []) {
+    if (this.state.data === null) {
       return <div><p>Loading ...</p></div>;
     }
 
     else {
+
+      console.log(data);
+
       return (
         <div>
           <ul>
-            {names.map(name =>
-              <li key={name.objectID}>
-                <a href={name.url}>{name.title}</a>
+            {data.map(name =>
+              <li>
+                {name}
               </li>
             )}
           </ul>
