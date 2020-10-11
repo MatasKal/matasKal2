@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import TableSorter from './components/TableSorter';
+import TableSorterDir from './components/TableSorterDir';
+import Loader from './components/Loader';
 
 const NAME_API = 'http://78.63.13.74:3006/FlowFormaAPI/names';
 const TECH_API = 'http://78.63.13.74:3006/FlowFormaAPI/tech';
 const DATE_API = 'http://78.63.13.74:3006/FlowFormaAPI/getdate/';
-
 
 
 class App extends Component {
@@ -12,45 +14,42 @@ class App extends Component {
     super(props);
     this.getDataFromApi = this.getDataFromApi.bind(this);
     this.state = {
-
       names: [],
       technologies: [],
       urls: [],
       dates: [],
       ages: [],
 
+      sortedField: null,
+      sortedFieldDir: 'ascending',
+      headerActivity: '',
+
       loadedNames: "false",
       loadedTech: "false",
       loadedDates: "false",
+
+      loaderVisible: '',
     }
   }
 
-  setSortedField(field) {
-    console.log(field);
-  }
-
   getDataFromApi() {
-
     if (this.state.loadedNames === "false" || "loaded") {
-      this.setState({ loadedNames: "loading" });
+      this.setState({ loadedNames: "loading", loaderVisible: 'show' });
       fetch(NAME_API)
         .then(response => response.json())
         .then((result) => {
-          this.setState({ names: result, loadedNames: "loaded" }, () => {
+          this.setState({ names: result, loadedNames: "loaded"}, () => {
             this.calculateAge();
           })
         });
     }
 
     if (this.state.loadedTech === "false" || "loaded") {
-      this.setState({ loadedTech: "loading" });
+      this.setState({ loadedTech: "loading", loaderVisible: 'show' });
       fetch(TECH_API)
         .then(response => response.json())
-        .then((result) => { this.setState({ technologies: result, loadedTech: "loaded" }) });
+        .then((result) => { this.setState({ technologies: result, loadedTech: "loaded"}) });
     }
-
-
-
   }
 
   async calculateAge() {
@@ -65,17 +64,15 @@ class App extends Component {
     let monthToday = today.getMonth() + 1;
     let dayToday = today.getDate();
 
-
-
     if (this.state.loadedDates === "false" || "loaded") {
-      this.setState({ loadedDates: "loading" });
+      this.setState({ loadedDates: "loading"});
       urls = this.state.names.map(name => DATE_API + name.toString());
     }
 
     await Promise.all(urls.map(url =>
       fetch(url)
         .then(response => response.json())))
-      .then(dates => this.setState({ dates, loadedDates: "loaded" }));
+      .then(dates => this.setState({ dates, loadedDates: "loaded", loaderVisible: '' }));
 
     agesArr = this.state.dates.map(date => {
       let dateNow = date;
@@ -121,41 +118,48 @@ class App extends Component {
   }
 
   render() {
-
     const { names } = this.state;
     const { technologies } = this.state;
     const { loadedNames } = this.state;
     const { loadedTech } = this.state;
     const { loadedDates } = this.state;
     const { ages } = this.state;
+    const { sortedField } = this.state;
+    const { sortedFieldDir } = this.state;
+    const { headerActivity } = this.state;
+    const { loaderVisible } = this.state;
 
-    let rowTable = [];
 
-    rowTable = names.map((_, i) =>
+    let rowTable = names.map((_, i) =>
       [
         loadedNames === "loading" ? "Loading..." : names[i],
         loadedTech === "loading" ? "Loading..." : technologies[i],
         loadedDates === "loading" ? "Loading..." : ages[i]
       ]);
 
+    let sortedRows = TableSorter(rowTable, sortedFieldDir, sortedField);
+
     return (
       <div>
-        <button id="populate-button" onClick={this.getDataFromApi}>Populate table</button>
+        <Loader visible={loaderVisible} />
+        <button id="populate-button" onClick={() => {
+          this.getDataFromApi();
+          this.setState({ sortedField: null, sortedFieldDir: 'normal' });
+        }}>Populate table</button>
         <table id="people-list">
           <thead><tr>
-            <th>Name</th>
-            <th>Tech</th>
-            <th>Age</th>
+            <th className={sortedField === 0 ? headerActivity : ""} onClick={() => this.setState(TableSorterDir(0, sortedFieldDir))}>Name</th>
+            <th className={sortedField === 1 ? headerActivity : ""} onClick={() => this.setState(TableSorterDir(1, sortedFieldDir))}>Tech</th>
+            <th className={sortedField === 2 ? headerActivity : ""} onClick={() => this.setState(TableSorterDir(2, sortedFieldDir))}>Age</th>
           </tr></thead>
           <tbody>
-            {rowTable.map(rowTable => {
+            {sortedRows.map((sortedRows,i) => {
               return (
                 <tr>
-                  <td>{rowTable[0]}</td>
-                  <td>{rowTable[1]}</td>
-                  <td>{rowTable[2]}</td>
-                </tr>)
-                ;
+                  <td>{sortedRows[0]}</td>
+                  <td >{sortedRows[1]}</td>
+                  <td>{sortedRows[2]}</td>
+                </tr>);
             })}
           </tbody>
         </table>
