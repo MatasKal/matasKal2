@@ -54,12 +54,12 @@ class App extends Component {
       fetch(TECH_API)
         .then(response => response.json())
         .then((result) => {
-          this.setState({ technologies: result, loadedTech: "loaded" }),
+          this.setState({ technologies: result, loadedTech: "loaded" },
             (error) => {
               if (error) {
                 alert('failed to fetch');
               }
-            }
+            })
         });
     }
   }
