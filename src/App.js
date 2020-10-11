@@ -38,7 +38,7 @@ class App extends Component {
       fetch(NAME_API)
         .then(response => response.json())
         .then((result) => {
-          this.setState({ names: result, loadedNames: "loaded"}, () => {
+          this.setState({ names: result, loadedNames: "loaded" }, () => {
             this.calculateAge();
           })
         });
@@ -48,7 +48,7 @@ class App extends Component {
       this.setState({ loadedTech: "loading", loaderVisible: 'show' });
       fetch(TECH_API)
         .then(response => response.json())
-        .then((result) => { this.setState({ technologies: result, loadedTech: "loaded"}) });
+        .then((result) => { this.setState({ technologies: result, loadedTech: "loaded" }) });
     }
   }
 
@@ -65,7 +65,7 @@ class App extends Component {
     let dayToday = today.getDate();
 
     if (this.state.loadedDates === "false" || "loaded") {
-      this.setState({ loadedDates: "loading"});
+      this.setState({ loadedDates: "loading" });
       urls = this.state.names.map(name => DATE_API + name.toString());
     }
 
@@ -148,17 +148,17 @@ class App extends Component {
         }}>Populate table</button>
         <table id="people-list">
           <thead><tr>
-            <th className={sortedField === 0 ? headerActivity : ""} onClick={() => this.setState(TableSorterDir(0, sortedFieldDir))}>Name</th>
-            <th className={sortedField === 1 ? headerActivity : ""} onClick={() => this.setState(TableSorterDir(1, sortedFieldDir))}>Tech</th>
-            <th className={sortedField === 2 ? headerActivity : ""} onClick={() => this.setState(TableSorterDir(2, sortedFieldDir))}>Age</th>
+            <th key={"nameHeader"} className={sortedField === 0 ? headerActivity : ""} onClick={() => this.setState(TableSorterDir(0, sortedFieldDir))}>Name</th>
+            <th key={"techHeader"} className={sortedField === 1 ? headerActivity : ""} onClick={() => this.setState(TableSorterDir(1, sortedFieldDir))}>Tech</th>
+            <th key={"ageHeader"} className={sortedField === 2 ? headerActivity : ""} onClick={() => this.setState(TableSorterDir(2, sortedFieldDir))}>Age</th>
           </tr></thead>
           <tbody>
-            {sortedRows.map((sortedRows,i) => {
+            {sortedRows.map((sortedRows, i) => {
               return (
-                <tr>
-                  <td>{sortedRows[0]}</td>
-                  <td >{sortedRows[1]}</td>
-                  <td>{sortedRows[2]}</td>
+                <tr key={names[i]}>
+                  <td key={names[i].toString() + " name"}>{sortedRows[0]}</td>
+                  <td key={names[i].toString() + " tech"}>{sortedRows[1]}</td>
+                  <td key={names[i].toString() + " age"}>{sortedRows[2]}</td>
                 </tr>);
             })}
           </tbody>
