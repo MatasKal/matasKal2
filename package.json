@@ -2,7 +2,7 @@
   "name": "flow-forma-task2",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://mataskalina.com",
+  "homepage": "https://mataskal.github.io/mataskal.github.io",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
