@@ -36,15 +36,17 @@ class App extends Component {
     if (this.state.loadedNames === "false" || "loaded") {
       this.setState({ loadedNames: "loading", loaderVisible: 'show' });
       fetch(NAME_API)
-        .then(response => response.json())
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error('Fetch failed');
+          }
+        }
+        )
         .then((result) => {
-          this.setState({ names: result, loadedNames: "loaded" }, (error) => {
-            if (error) {
-              alert('failed to fetch');
-            }
-            else {
-              this.calculateAge();
-            }
+          this.setState({ names: result, loadedNames: "loaded" }, () => {
+            this.calculateAge();
           })
         });
     }
@@ -52,14 +54,15 @@ class App extends Component {
     if (this.state.loadedTech === "false" || "loaded") {
       this.setState({ loadedTech: "loading", loaderVisible: 'show' });
       fetch(TECH_API)
-        .then(response => response.json())
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error('Fetch failed');
+          }
+        })
         .then((result) => {
-          this.setState({ technologies: result, loadedTech: "loaded" },
-            (error) => {
-              if (error) {
-                alert('failed to fetch');
-              }
-            })
+          this.setState({ technologies: result, loadedTech: "loaded" })
         });
     }
   }
@@ -83,13 +86,14 @@ class App extends Component {
 
     await Promise.all(urls.map(url =>
       fetch(url)
-        .then(response => response.json())))
-      .then(dates => this.setState({ dates, loadedDates: "loaded", loaderVisible: '' },
-        (error) => {
-          if (error) {
-            alert('failed to fetch');
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error('Fetch failed');
           }
-        }));
+        })))
+      .then(dates => this.setState({ dates, loadedDates: "loaded", loaderVisible: '' }));
 
     agesArr = this.state.dates.map(date => {
       let dateNow = date;
