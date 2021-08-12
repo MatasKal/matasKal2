@@ -3,9 +3,9 @@ import TableSorter from './components/TableSorter';
 import TableSorterDir from './components/TableSorterDir';
 import Loader from './components/Loader';
 
-const NAME_API = 'http://78.63.13.74:3006/FlowFormaAPI/names';
-const TECH_API = 'http://78.63.13.74:3006/FlowFormaAPI/tech';
-const DATE_API = 'http://78.63.13.74:3006/FlowFormaAPI/getdate/';
+const NAME_API = 'https://tomsen.dev/FlowFormaAPI/names';
+const TECH_API = 'https://tomsen.dev/FlowFormaAPI/tech';
+const DATE_API = 'https://tomsen.dev/FlowFormaAPI/getdate/';
 
 
 class App extends Component {
